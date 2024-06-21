@@ -6,6 +6,50 @@
     <title>Document</title>
 </head>
 <body>
+    <div id="app">
+        <p v-if="information.length === 0">There are no information.</p>
+        <P v-else>Here is all info</P>
+        <div v-for="item in information">{{item.name}}:
+            <span v-for="n in item.height.filter(n=>n>12)">
+                {{n+','}}
+            </span>
+        </div>
+        
+    </div>  
     
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data:()=>({
+                
+                information:[
+                    {
+                        id:1,
+                        name:'fei',
+                        height:[12,43,21]
+                    },
+                    {
+                        id:2,
+                        name:'liu',
+                        height:[3,54,9]
+                    },
+                    {
+                        id:3,
+                        name:'jim',
+                        height:[3,4,12,56]
+                    },
+                ],
+            
+            })
+        }).mount('#app');
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
