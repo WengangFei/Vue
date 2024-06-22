@@ -15,19 +15,15 @@
             <span v-for="item in num.n">{{item}}</span>
         </div>
         <hr>
-
-
-        <h5>{{changeTitle}}</h5>
+        <h5>Counter</h5>
         <h2>{{number}}</h2>
         <label for="incrementCount">Increment by:</label>
-        <!-- :value="incrementAmount"
-        @:input="increment" -->
+        <!-- v-bind:value="incrementAmount"
+        v-on:input="changeIncrementAmount" -->
         <input type="number" 
-            v-model="incrementAmount" 
+            v-model="incrementAmount"
         />
         <button v-on:click="incrementCount">Increment Number</button>
-        <hr>
-
 
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -50,50 +46,26 @@
             //to reflect the changes.
             data(){//return a configuration object.
                 return {
-                    //these reactive data can not be applied logic modification.
                     message:'Come on!',
                     listOfNumbers:[
                         {id:'1',name:'fei',n:[11,22,33]},
                         {id:'2',name:'wen',n:[11,22,33]},
                         {id:'3',name:'gang',n:[11,22,33]}
                     ],
-                    number:0,
+                    number:10,
                     incrementAmount:0,
-                    counter: "Counter",
                 }
             },
-
-            computed:{//performance optimized calculations on reactive data 
-                changeTitle(){
-                    return this.number > 3 ? this.counter = 'Bomb Over 10' : 'Counter';
-                   
-                }
-            },
-
-
             methods:{
                 incrementCount(){
                     this.number += this.incrementAmount;
                 },
-                // increment(e){
+                // changeIncrementAmount(e){
                 //     this.incrementAmount = Number(e.target.value);
-                // },
-            },
-
-            watch:{
-                //watch method is watching for all data changes.
-                // watching the number and auto => newValue
-                //to Avoid the heavy computation reactive data, move it to computed 
-                //property to 
-                number(newValue){
-                    newValue % 2 === 0 ? this.counter = 'Even Counter' : this.counter = 'Odd Counter'
-                }
+                // }
             }
-
-
         }).mount('#app')
-                       
-
+        
     </script>
 </body>
 </html>
