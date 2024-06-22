@@ -63,6 +63,17 @@
                 // changeIncrementAmount(e){
                 //     this.incrementAmount = Number(e.target.value);
                 // }
+            },
+
+
+            watch:{
+                //watch method is watching for all data changes.
+                // watching the number and auto => newValue
+                //to Avoid the heavy computation reactive data, move it to computed 
+                //property to 
+                number(newValue){
+                    newValue % 2 === 0 ? this.counter = 'Even Counter' : this.counter = 'Odd Counter'
+                }
             }
         }).mount('#app')
         

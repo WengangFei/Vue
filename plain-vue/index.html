@@ -24,7 +24,7 @@
         <!-- <button @click="addCharacter(character)">Add a character</button> -->
         <hr>
         <h3>Age Ranges:</h3>
-        <p>Bigger than 10: {{olderThanTen}}</p>
+        <p>Bigger than 10: <span v-for="name in olderThanTen">{{name}}{{', '}}</span></p>
         <p>Bigger than 20: {{olderThanTwenty}}</p>
         <p>Bigger than 50: {{olderThanFifty}}</p>
 
@@ -68,11 +68,11 @@
                 },
 
                 olderThanTwenty(){
-                    return (this.information.filter(i=>i.height.find(num=>num>20))).map(n=>n.name);
+                    return (this.information.filter(i=>i.height.find(num=>num>20))).map(n=>n.name).reduce((acc,current)=>current ? acc + 1 : null,0);
                 },
 
                 olderThanFifty(){
-                    return (this.information.filter(i=>i.height.find(num=>num>50))).map(n=>n.name);
+                    return (this.information.filter(i=>i.height.find(num=>num>50))).map(n=>n.name).reduce((acc,current)=>current ? acc + 1 : null,0);
                 },
 
             },
