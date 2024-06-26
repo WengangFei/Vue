@@ -1,12 +1,18 @@
 <script>
 import BaseCounter from './components/BaseCounter.vue'
 import ListInfo from './components/ListInfo.vue'
+import BaseButton from './components/BaseButton.vue'
+import BaseLayout from './components/BaseLayout.vue'
+import TestComponent from './components/TestComponent.vue'
 
 export default {
   //register a component in to components property.
   components: {
     BaseCounter,
-    ListInfo
+    ListInfo,
+    BaseButton,
+    BaseLayout,
+    TestComponent
   },
 
   //data function is to define the reactive state for a component
@@ -76,5 +82,18 @@ export default {
     <hr />
     <!-- Counter component injected -->
     <BaseCounter />
+    <hr />
+
+    <BaseButton :left="true">Parent</BaseButton>
+    <hr />
+
+    <BaseLayout>
+      <template v-slot:top>top section</template>
+      <template v-slot:middle>Whooooo</template>
+      <!-- pass a component in to a component as prop -->
+      <template v-slot:bottom>
+        <TestComponent />
+      </template>
+    </BaseLayout>
   </div>
 </template>

@@ -1,4 +1,5 @@
 <script>
+import { parseConfigFileTextToJson } from 'typescript'
 import NameCard from './NameCard.vue'
 export default {
   props: {
@@ -23,14 +24,14 @@ export default {
       this.$emit('change-age')
     },
 
-    addNumber(id) {
-      this.listOfNumbers.find((item) => item.id === id).n.push(this.numAdded)
+    addNumber(payload) {
+      this.listOfNumbers.find((item) => item.id === payload.number).n.push(this.numAdded)
       //reset the input
       this.val.target.value = ''
     },
-    numToAdd(e) {
-      this.numAdded = Number(e.target.value)
-      this.val = e
+    numToAdd(payload) {
+      this.numAdded = Number(payload.event.target.value)
+      this.val = payload.event
     }
   },
 
@@ -45,9 +46,10 @@ export default {
       numAdded: 0,
       val: ''
     }
-  }
-  //registered the component
-  //   components: { NameCard }
+  },
+
+  // registered the component
+  components: { NameCard }
 }
 </script>
 
@@ -64,9 +66,7 @@ export default {
     <p v-else>Odd: {{ message }}</p>
     <div v-for="num in listOfNumbers" :key="num.id">
       {{ num.name }}:
-      <span v-for="item in num.n" :key="item">{{ item }}{{ ', ' }}</span>
-      <input type="text" @input="numToAdd" />
-      <button @click="addNumber(num.id)">Add a Number</button>
+      <NameCard :num="num" @input-number="numToAdd" @click-button="addNumber" />
     </div>
   </div>
 </template>
