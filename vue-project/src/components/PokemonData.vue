@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    {{ nameList }}
+  </div>
 </template>
 
 <script>

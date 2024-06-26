@@ -1,8 +1,11 @@
 <template>
   <div>
+    <!-- <component :is="'RouteTest'" /> -->
+    <RouteTest />
+    <hr />
     <!-- https://pokeapi.co/api/v2/pokemon?limit=25 -->
     <!-- Suspense components are used to display fallback content when 
-    waiting for some sort of asynchronous component to resolve. -->
+    waiting for asynchronous component to resolve. -->
     <Suspense>
       <!-- async component -->
       <template #default>
@@ -18,9 +21,6 @@
   </div>
 
   <hr />
-  <!-- <component :is="'RouteTest'" /> -->
-
-  <RouteTest />
 </template>
 
 <script>
