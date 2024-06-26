@@ -25,13 +25,16 @@ export default {
     },
 
     addNumber(payload) {
-      this.listOfNumbers.find((item) => item.id === payload.number).n.push(this.numAdded)
+    
+      this.listOfNumbers.find((item) => item.id === payload.id).n.push(this.numAdded)
       //reset the input
       this.val.target.value = ''
     },
-    numToAdd(payload) {
+    numToAdd(payload) {//emit fun from child compo
+       
       this.numAdded = Number(payload.event.target.value)
-      this.val = payload.event
+      this.val = payload.event;
+      
     }
   },
 
@@ -47,9 +50,8 @@ export default {
       val: ''
     }
   },
-
-  // registered the component
-  components: { NameCard }
+  //registered the component
+    components: { NameCard }
 }
 </script>
 
