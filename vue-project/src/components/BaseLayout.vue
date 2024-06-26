@@ -1,14 +1,17 @@
 <template>
   <div>
-    <h3>
-      <slot name="top" />
-    </h3>
-    <h3>
-      <slot name="middle" />
-    </h3>
-    <h3>
-      <slot name="bottom" />
-    </h3>
+    Slot:
+    <div>1
+      <slot></slot>
+    </div>
+    <div>2
+      <slot></slot>
+    </div>
+    <div>3
+      <slot></slot>
+    </div>
+    
+  
   </div>
 </template>
 
