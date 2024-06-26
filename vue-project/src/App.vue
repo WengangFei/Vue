@@ -1,18 +1,44 @@
 <template>
   <div>
     <!-- https://pokeapi.co/api/v2/pokemon?limit=25 -->
-     <div v-for="po in pokemon" :key="po">
-      <h3>{{ po  }}</h3>
-     </div>
+    <!-- Suspense components are used to display fallback content when 
+    waiting for some sort of asynchronous component to resolve. -->
+    <Suspense>
+      <!-- async component -->
+      <template #default>
+        <PokemonData />
+      </template>
+
+      <!-- define a fallback component or content that display while async component is loading -->
+      <template #fallback> loading Pokemon data..... </template>
+      <!-- <template #fallback>
+        <LoadingSpinner />
+      </template> -->
+    </Suspense>
   </div>
+
+  <hr />
+  <!-- <component :is="'RouteTest'" /> -->
+
+  <RouteTest />
 </template>
 
 <script>
-  export default {
-    data:()=>({
-      pokemon:[1,2,3]
-    })
-  }
-  
-</script>
+import RouteTest from './components/RouteTest.vue'
+import PokemonData from './components/PokemonData.vue'
 
+export default {
+  components: {
+    RouteTest,
+    PokemonData
+  }
+  // computed: {
+  //   fun() {
+  //     ;(() => {
+  //       console.log('fengyuexiang')
+  //     })()
+  //     return 'fei'
+  //   }
+  // }
+}
+</script>
