@@ -21,12 +21,13 @@ export default {
     const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
     const rawData = await resp.json()
     const nameList = rawData.results.map((item) => item.name)
-  //all returned data are no reactivity,just constant data,
-  //wont change as the data changes.
+  
     const upperCaseName = computed(()=>{
       return name.value.toUpperCase();
     });
     return {
+      //all returned data are no reactivity,just constant data,
+      //wont updated as the data changes.
       //reactive reference
       name,
       nameList,
