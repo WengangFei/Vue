@@ -1,26 +1,19 @@
 <template>
-  <div>Users:</div>
-  <div>
-    {{ users }}
-  </div>
+  <h2>Users:</h2>
+  <Suspense>
+    <template #default>
+      <GetUsers />
+    </template>
+    <template #fallback> Loading all users .... </template>
+  </Suspense>
 </template>
 
 <script>
+import GetUsers from './GetUsers.vue'
+
 export default {
-  data() {
-    return {
-      users: []
-    }
-  },
-  methods: {
-    async fetchUsers() {
-      const resp = await fetch('https://jsonplaceholder.typicode.com/users')
-      const rawData = await resp.json()
-      this.users = rawData.map((item) => item.name)
-    }
-  },
-  created() {
-    this.fetchUsers()
+  components: {
+    GetUsers
   }
 }
 </script>

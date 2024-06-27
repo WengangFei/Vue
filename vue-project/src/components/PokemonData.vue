@@ -3,6 +3,7 @@
     <h3>Name: {{ name }}</h3>
     <h2>Uppercase:{{ upperCaseName }}</h2>
     <h2>Lowercase:{{ allLowerCase }}</h2>
+    <h2>{{ reactiveFun }}</h2>
     <button @click="changeName">Change Name</button>
     <button @click="allCapName">Change Cap</button><br />
     {{ nameList }}
@@ -11,27 +12,32 @@
 
 <script>
 // reactive reference
-import {ref, computed} from 'vue';
+import { ref, computed, reactive } from 'vue'
 
 export default {
-
-  //composition API
+  //composition API is a pure JS function
   async setup() {
-    const name = ref('lili');
+    const name = ref('lili')
     const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
     const rawData = await resp.json()
     const nameList = rawData.results.map((item) => item.name)
-  
-    const upperCaseName = computed(()=>{
-      return name.value.toUpperCase();
-    });
+    //computed function from vue
+    const upperCaseName = computed(() => {
+      return name.value.toUpperCase()
+    })
+    //set a reactive data that can be maneuvered in options APIs
+    const state = reactive({
+      myName: 'fei'
+    })
+
     return {
       //all returned data are no reactivity,just constant data,
       //wont updated as the data changes.
       //reactive reference
       name,
       nameList,
-      upperCaseName
+      upperCaseName,
+      state
     }
   },
 
@@ -43,18 +49,21 @@ export default {
   },
 
   methods: {
-    changeName(){
-      this.name = 'fei' 
+    changeName() {
+      this.name = 'fei'
     },
-     allCapName(){
-
-      this.name = this.name.toUpperCase();
-     }
+    allCapName() {
+      this.name = this.name.toUpperCase()
+    }
   },
 
-  computed:{
-    allLowerCase(){
+  computed: {
+    //computed property defined as function and behave like data property
+    allLowerCase() {
       return this.name.toLowerCase()
+    },
+    reactiveFun() {
+      return this.state.myName.toUpperCase()
     }
   },
 
@@ -62,7 +71,7 @@ export default {
   created() {
     // console.log(this.nameList)
     // console.log(this.name)
-    console.log(this.name)
+    // console.log(this.name)
   }
 }
 </script>
