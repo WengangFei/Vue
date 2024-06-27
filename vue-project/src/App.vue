@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h2>Show name: {{ myName }}</h2>
+
+    <hr />
     <!-- <component :is="'RouteTest'" /> -->
     <RouteTest />
     <hr />
@@ -9,7 +12,7 @@
     <Suspense>
       <!-- async component -->
       <template #default>
-        <PokemonData />
+        <PokemonData region="kakaPokemon" @showNameOnTop="showName" />
       </template>
 
       <!-- define a fallback component or content that display while async component is loading -->
@@ -31,7 +34,20 @@ export default {
   components: {
     RouteTest,
     PokemonData
+  },
+
+  methods: {
+    showName() {
+      this.myName = 'Wengang Fei'
+    }
+  },
+
+  data() {
+    return {
+      myName: ''
+    }
   }
+
   // computed: {
   //   fun() {
   //     ;(() => {

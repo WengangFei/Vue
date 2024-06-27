@@ -1,3 +1,5 @@
+<!-- FULL COMPOSITION API -->
+
 <template>
   <div>
     <h3>Name: {{ name }}</h3>
@@ -7,71 +9,85 @@
     <button @click="changeName">Change Name</button>
     <button @click="allCapName">Change Cap</button><br />
     {{ nameList }}
+    <p>Pass prop is {{ props.region }}</p>
+    <button @click="changeTopName">Show name on top</button>
   </div>
 </template>
 
-<script>
+<script setup>
 // reactive reference
-import { ref, computed, reactive } from 'vue'
-
-export default {
-  //composition API is a pure JS function
-  async setup() {
-    const name = ref('lili')
-    const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
-    const rawData = await resp.json()
-    const nameList = rawData.results.map((item) => item.name)
-    //computed function from vue
-    const upperCaseName = computed(() => {
-      return name.value.toUpperCase()
-    })
-    //set a reactive data that can be maneuvered in options APIs
-    const state = reactive({
-      myName: 'fei'
-    })
-
-    return {
-      //all returned data are no reactivity,just constant data,
-      //wont updated as the data changes.
-      //reactive reference
-      name,
-      nameList,
-      upperCaseName,
-      state
-    }
-  },
-
-  //passing objects in order to define how component working call options APIs,
-  //each object in this component is a single API
-  data() {
-    //option API
-    return {}
-  },
-
-  methods: {
-    changeName() {
-      this.name = 'fei'
-    },
-    allCapName() {
-      this.name = this.name.toUpperCase()
-    }
-  },
-
-  computed: {
-    //computed property defined as function and behave like data property
-    allLowerCase() {
-      return this.name.toLowerCase()
-    },
-    reactiveFun() {
-      return this.state.myName.toUpperCase()
-    }
-  },
-
-  //component created
-  created() {
-    // console.log(this.nameList)
-    // console.log(this.name)
-    // console.log(this.name)
+import { ref, computed, reactive, defineProps, defineEmits } from 'vue'
+//define props
+//access region => props.region
+const props = defineProps({
+  region: {
+    type: String,
+    default: 'knot'
   }
+})
+
+const emits = defineEmits(['showNameOnTop'])
+
+// export default {
+//composition API is a pure JS function
+// async setup() {
+//in script setup, Vue hoist and does all the async stuff,no need to manually assign async
+const name = ref('lili') //return a object, to access the value lili, unpack to name.value
+const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
+const rawData = await resp.json()
+const nameList = rawData.results.map((item) => item.name)
+//computed function from vue
+const upperCaseName = computed(() => {
+  return name.value.toUpperCase()
+})
+//set a reactive data that can be maneuvered in options APIs
+const state = reactive({
+  myName: 'fei'
+})
+
+//computed return a value as the reactive data and set in setup function
+//return object to expose to the options APIs an template
+const allLowerCase = computed(() => name.value.toLowerCase())
+const reactiveFun = computed(() => state.myName.toUpperCase())
+
+//JS methods
+function changeName() {
+  name.value = 'fei'
 }
+
+function allCapName() {
+  name.value.toUpperCase()
+}
+
+function changeTopName() {
+  emits('showNameOnTop')
+}
+
+// return {
+//   //all returned data are no reactivity,just constant data,
+//   //wont updated as the data changes.
+//   //reactive reference
+//   name,
+//   nameList,
+//   upperCaseName,
+//   state,
+//   allLowerCase,
+//   reactiveFun,
+//   changeName,
+//   allCapName,
+//   passDownProp
+// }
+
+//passing objects in order to define how component working call options APIs,
+//each object in this component is a single API
+
+//option API
+// methods: {
+//when access the data in setup function, can directly use this.name form
+//no need to unpack the object data that saved in returning object
+// allCapName() {
+//   this.name = this.name.toUpperCase()
+// }
+// }
+// }
 </script>

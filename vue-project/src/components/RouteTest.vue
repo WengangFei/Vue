@@ -14,12 +14,6 @@ import LoginPage from './LoginPage.vue'
 import UserPage from './UserPage.vue'
 
 export default {
-  components: {
-    HomePage,
-    LoginPage,
-    UserPage
-  },
-
   data() {
     return {
       page: 'Home'
@@ -43,6 +37,12 @@ export default {
     changeToUserPage() {
       this.page = 'User'
     }
+  },
+  //component register
+  components: {
+    HomePage,
+    LoginPage,
+    UserPage
   }
 }
 </script>

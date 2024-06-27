@@ -1,5 +1,4 @@
 <script>
-import { parseConfigFileTextToJson } from 'typescript'
 import NameCard from './NameCard.vue'
 export default {
   props: {
@@ -12,10 +11,11 @@ export default {
       required: true
     }
   },
-
+  //set up emitters
   emits: ['change-name', 'change-age'],
 
   methods: {
+    // in child component to trigger the emitter
     changeDocName() {
       this.$emit('change-name')
     },
@@ -25,16 +25,15 @@ export default {
     },
 
     addNumber(payload) {
-    
       this.listOfNumbers.find((item) => item.id === payload.id).n.push(this.numAdded)
       //reset the input
       this.val.target.value = ''
     },
-    numToAdd(payload) {//emit fun from child compo
-       
+    numToAdd(payload) {
+      //emit fun from child compo
+
       this.numAdded = Number(payload.event.target.value)
-      this.val = payload.event;
-      
+      this.val = payload.event
     }
   },
 
@@ -51,7 +50,7 @@ export default {
     }
   },
   //registered the component
-    components: { NameCard }
+  components: { NameCard }
 }
 </script>
 
