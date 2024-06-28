@@ -2,6 +2,7 @@
 
 <template>
   <div>
+    <h3>{{ newCount }}</h3>
     <h3>Name: {{ name }}</h3>
     <h2>Uppercase:{{ upperCaseName }}</h2>
     <h2>Lowercase:{{ allLowerCase }}</h2>
@@ -9,24 +10,25 @@
     <button @click="changeName">Change Name</button>
     <button @click="allCapName">Change Cap</button><br />
     {{ nameList }}
-    <p>Pass prop is {{ props.region }}</p>
-    <button @click="changeTopName">Show name on top</button>
+    <p>Pass prop is {{ region }}</p>
+    <button @click="$emit('showNameOnTop')">Show name on top</button>
   </div>
 </template>
 
 <script setup>
 // reactive reference
-import { ref, computed, reactive, defineProps, defineEmits } from 'vue'
+import { ref, computed, reactive } from 'vue'
+import { newCount } from '../composable/countStore.js'
 //define props
 //access region => props.region
-const props = defineProps({
+defineProps({
   region: {
     type: String,
     default: 'knot'
   }
 })
 
-const emits = defineEmits(['showNameOnTop'])
+defineEmits(['showNameOnTop'])
 
 // export default {
 //composition API is a pure JS function
@@ -59,9 +61,9 @@ function allCapName() {
   name.value.toUpperCase()
 }
 
-function changeTopName() {
-  emits('showNameOnTop')
-}
+// function changeTopName() {
+//   emits('showNameOnTop')
+// }
 
 // return {
 //   //all returned data are no reactivity,just constant data,

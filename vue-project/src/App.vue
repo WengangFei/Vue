@@ -1,5 +1,7 @@
 <template>
   <div>
+    <BaseCounter />
+    <hr>
     <h2>Show name: {{ myName }}</h2>
 
     <hr />
@@ -29,11 +31,13 @@
 <script>
 import RouteTest from './components/RouteTest.vue'
 import PokemonData from './components/PokemonData.vue'
+import BaseCounter from './components/BaseCounter.vue'
 
 export default {
   components: {
     RouteTest,
-    PokemonData
+    PokemonData,
+    BaseCounter 
   },
 
   methods: {

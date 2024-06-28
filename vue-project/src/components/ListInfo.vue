@@ -25,7 +25,7 @@ export default {
     },
 
     addNumber(payload) {
-      this.listOfNumbers.find((item) => item.id === payload.id).n.push(this.numAdded)
+      this.listOfNumbers.find((item) => item.id === payload.number).n.push(this.numAdded)
       //reset the input
       this.val.target.value = ''
     },

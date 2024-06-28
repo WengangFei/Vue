@@ -10,13 +10,13 @@ component by practicing using Suspense component -->
   <h3 v-else>{{ state.nameList }}</h3>
 </template>
 
-<script>
+<script setup>
 import { ref, reactive } from 'vue'
-export default {
+// export default {
   //getting all users from setup composition API from early setup stage,
   //runs before every other options APIs. This will allow to get information
   //from API as early as possible.
-  async setup() {
+  // async setup() {
     const resp = await fetch('https://jsonplaceholder.typicode.com/users')
     const data = await resp.json()
     const users = ref(data.map((item) => item.name))
@@ -32,11 +32,11 @@ export default {
       )
     }
 
-    return {
-      state,
-      users,
-      captureName
-    }
-  }
-}
+    // return {
+    //   state,
+    //   users,
+    //   captureName
+    // }
+  // }
+// }
 </script>
