@@ -1,7 +1,7 @@
 <template>
   <div>
     <BaseCounter />
-    <hr>
+    <hr />
     <h2>Show name: {{ myName }}</h2>
 
     <hr />
@@ -32,23 +32,30 @@
 import RouteTest from './components/RouteTest.vue'
 import PokemonData from './components/PokemonData.vue'
 import BaseCounter from './components/BaseCounter.vue'
+import { useCount } from './composable/countStore.js'
 
 export default {
   components: {
     RouteTest,
     PokemonData,
-    BaseCounter 
+    BaseCounter
   },
 
   methods: {
     showName() {
       this.myName = 'Wengang Fei'
+    },
+    changeName() {
+      this.test.name = 'lili'
     }
   },
 
   data() {
+    const newCounter = useCount()
     return {
       myName: ''
+
+      // newCounter
     }
   }
 

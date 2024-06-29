@@ -1,11 +1,13 @@
 <template>
   <div>
-    <h2>This is home page</h2>
+    {{ nameList }}
   </div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import { userList } from '../composable/useUsers.js'
+
+const nameList = userList.value.slice(0, 5)
 </script>
 
-<style lang="scss" scoped></style>
+<style></style>
