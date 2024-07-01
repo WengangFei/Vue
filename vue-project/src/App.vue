@@ -1,7 +1,5 @@
 <template>
   <div class="text-center p-6">
-    {{ console.log(3) }}
-    <p>{{ fei }}</p>
     <BaseCounter />
     <hr />
     <h2>Show name: {{ myName }}</h2>
@@ -41,8 +39,7 @@ export default {
     const data = pinia()
     data.getNameList()
     return {
-      // ...data,
-      fei
+      data
     }
   },
 
