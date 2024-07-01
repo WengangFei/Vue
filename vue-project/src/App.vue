@@ -1,6 +1,7 @@
 <template>
   <div class="text-center p-6">
-   
+    {{ console.log(3) }}
+    <p>{{ fei }}</p>
     <BaseCounter />
     <hr />
     <h2>Show name: {{ myName }}</h2>
@@ -32,9 +33,19 @@
 import RouteTest from './components/RouteTest.vue'
 import PokemonData from './components/PokemonData.vue'
 import BaseCounter from './components/BaseCounter.vue'
-import { useCount } from './composable/countStore.js'
+import { pinia } from '@/pinia/store.js'
 
 export default {
+  setup() {
+    console.log(1)
+    const data = pinia()
+    data.getNameList()
+    return {
+      // ...data,
+      fei
+    }
+  },
+
   components: {
     RouteTest,
     PokemonData,
@@ -51,31 +62,29 @@ export default {
   },
 
   data() {
-    const newCounter = useCount()
     return {
       myName: ''
-
       // newCounter
     }
   }
 
   // computed: {
-  //   fun() {
-  //     ;(() => {
-  //       console.log('fengyuexiang')
-  //     })()
-  //     return 'fei'
-  //   }
+
+  // }
+
+  // beforeCreate() {
+  //   const piniaStore = pinia()
+  //   piniaStore.getNameList()
   // }
 }
 </script>
 
 <style>
-  button{
-    background-color: green;
-    color: white;
-    padding:0 10px 0 10px;
-    border-radius: 10px;
-    margin: 0 10px 0 10px;
-  }
+button {
+  background-color: green;
+  color: white;
+  padding: 0 10px 0 10px;
+  border-radius: 10px;
+  margin: 0 10px 0 10px;
+}
 </style>
