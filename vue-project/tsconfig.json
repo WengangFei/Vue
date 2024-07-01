@@ -1,4 +1,4 @@
-{
+{//setup for not use typescript and allow to use JS
   "compilerOptions": {
     "allowJs": true,
   },

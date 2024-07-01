@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="text-center p-6">
+   
     <BaseCounter />
     <hr />
     <h2>Show name: {{ myName }}</h2>
-
     <hr />
     <!-- <component :is="'RouteTest'" /> -->
     <RouteTest />
@@ -69,3 +69,13 @@ export default {
   // }
 }
 </script>
+
+<style>
+  button{
+    background-color: green;
+    color: white;
+    padding:0 10px 0 10px;
+    border-radius: 10px;
+    margin: 0 10px 0 10px;
+  }
+</style>

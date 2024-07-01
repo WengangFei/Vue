@@ -1,48 +1,35 @@
 <template>
   <div>
-    <a href="#" @click.prevent="changeToHomePage">Home</a>&
-    <a href="#" @click.prevent="changeToLoginPage">Login</a>&
-    <a href="#" @click.prevent="changeToUserPage">User Page</a>&
-    <!-- dynamic components -->
-    <component :is="renderPage" />
+    
+    <RouterView />
+    <RouterLink  to='/' class="bg-sky-500 text-sm mx-2 px-1 rounded-md"> 
+      Home
+    </RouterLink>
+    <RouterLink to='/login' class="bg-sky-500 text-sm mx-2 px-1 rounded-md">
+      Login
+    </RouterLink>
+    <RouterLink to='/users' class="bg-sky-500 text-sm mx-2 px-1 rounded-md">
+      Users
+    </RouterLink>
+   
   </div>
 </template>
 
-<script>
-import HomePage from './HomePage.vue'
-import LoginPage from './LoginPage.vue'
-import UserPage from './UserPage.vue'
+<script setup>
+  import { useRouter } from 'vue-router';
+  import { useCount } from '@/composable/countStore.js';
+  import { watch } from 'vue';
+  import { pinia } from '@/pinia/store.js'
+  
+console.log(pinia().changeName);
+  
+  const globalCount = useCount();
+  const router = useRouter();
+  watch(globalCount.globalCount,(value)=>{
+    value > 530 ? router.push('/users') : null
+  });
 
-export default {
-  data() {
-    return {
-      page: 'Home'
-    }
-  },
 
-  computed: {
-    renderPage() {
-      return this.page + 'Page'
-    }
-  },
-
-  methods: {
-    changeToHomePage() {
-      this.page = 'Home'
-    },
-
-    changeToLoginPage() {
-      this.page = 'Login'
-    },
-    changeToUserPage() {
-      this.page = 'User'
-    }
-  },
-  //component register
-  components: {
-    HomePage,
-    LoginPage,
-    UserPage
-  }
-}
 </script>
+
+

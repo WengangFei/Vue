@@ -9,7 +9,7 @@
     <h2>{{ reactiveFun }}</h2>
     <button @click="changeName">Change Name</button>
     <button @click="allCapName">Change Cap</button><br />
-    {{ userList }}
+    {{ userList.map(item=>item.name) }}
     <p>Pass prop is {{ region }}</p>
     <button @click="$emit('showNameOnTop')">Show name on top</button>
   </div>
@@ -38,7 +38,7 @@ defineEmits(['showNameOnTop'])
 const name = ref('lili') //return a object, to access the value lili, unpack to name.value
 const resp = await fetch('https://pokeapi.co/api/v2/pokemon?limit=25')
 const rawData = await resp.json()
-userList.value = rawData.results.map((item) => item.name)
+userList.value = rawData.results
 
 //computed function from vue
 const upperCaseName = computed(() => {

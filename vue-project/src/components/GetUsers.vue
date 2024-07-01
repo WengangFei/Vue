@@ -4,8 +4,8 @@
 component by practicing using Suspense component -->
 <template>
   <div>{{ users }}</div>
-  <label>Name begin with: </label>
-  <input type="text" @input="captureName" /><br />
+  <label>Search Name: </label>
+  <input class='border-2' type="text" @input="captureName" /><br />
   <h3 v-if="state.nameList.length === 0">No names are found</h3>
   <h3 v-else>{{ state.nameList }}</h3>
 </template>
@@ -32,11 +32,4 @@ function captureName(e) {
   )
 }
 
-// return {
-//   state,
-//   users,
-//   captureName
-// }
-// }
-// }
 </script>
