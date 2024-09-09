@@ -1,0 +1,25 @@
+{
+  "name": "vue-practice",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@react-oauth/google": "^0.12.1",
+    "gapi-script": "^1.2.0",
+    "vue": "^3.4.37",
+    "vue-google-oauth2": "^1.5.10"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.2",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.41",
+    "tailwindcss": "^3.4.10",
+    "unplugin-vue-components": "^0.27.4",
+    "vite": "^5.4.2"
+  }
+}
