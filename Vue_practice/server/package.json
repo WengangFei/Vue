@@ -1,0 +1,16 @@
+{
+  "name": "backend_server",
+  "version": "1.0.0",
+  "description": "server for interacte with frontend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "author": "fei",
+  "license": "ISC",
+  "dependencies": {
+    "google-auth-library": "^9.14.1",
+    "nodemon": "^3.1.4"
+  }
+}
