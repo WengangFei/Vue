@@ -12,13 +12,13 @@
 import { onMounted } from "vue";
 import * as jose from "jose";
 import { User } from "@/assets/userInformation";
+import envConfigs from "@/envConfigs.json";
 
 onMounted(() => {
   //   localStorage.clear();
   // is used to initialize the Google Identity Services for JavaScript, which enables integration with Google’s authentication and authorization services.
   google.accounts.id.initialize({
-    client_id:
-      "847596083245-o0g8vrikn0gdk21ak1s4cca45ufc995q.apps.googleusercontent.com",
+    client_id: envConfigs.dev.client_id,
     callback: (response) => {
       try {
         const credential = jose.decodeJwt(response.credential);
