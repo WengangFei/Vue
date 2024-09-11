@@ -8,7 +8,8 @@ class User{
         this.not_before_time = new Date(cre.nbf * 1000).toLocaleString(),
         this.user_id = cre.sub,//The unique identifier for the user, typically a string of digits representing the user’s Google account ID.
         this.user_image = cre.picture,
-        this.JWT_id = cre.jti //A unique identifier for the token, used to prevent replay attacks.
+        this.JWT_id = cre.jti, //A unique identifier for the token, used to prevent replay attacks.
+        this.isSignIn = false
     }
 
     setLocalStorage(cre){

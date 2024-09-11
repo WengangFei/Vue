@@ -2,13 +2,15 @@
   <div class="p-6">
     <!-- <OptionAPI /> -->
     <!-- <TestVmodel /> -->
+    New Test
     <hr class="border-red-500 m-4" />
     <!-- <TestSlot /> -->
-    <GoogleSignin />
+    <RouterView />
   </div>
 </template>
 
 <script>
+import { RouterView } from "vue-router";
 import GoogleSignin from "./components/GoogleSignin.vue";
 import OptionAPI from "./components/OptionAPI.vue";
 import TestSlot from "./components/TestSlot.vue";
