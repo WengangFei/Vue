@@ -8,12 +8,14 @@ const routes = [
     {
         path:'/home',
         name:'Home',
-        component: HomePage
+        component: HomePage,
+        meta: { requiresAuth: true }
     },
     {
         path:'/about',
         name: 'About',
-        component: AboutPage
+        component: AboutPage,
+        meta: { requiresAuth: true }
     },
     {
         path:'/signin',
@@ -22,7 +24,8 @@ const routes = [
     },
     {   path:'/',
         name:'App',
-        component:App
+        component:App,
+        meta: { requiresAuth: true }
     }
 ]
 

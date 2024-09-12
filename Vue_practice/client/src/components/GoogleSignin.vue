@@ -12,7 +12,7 @@ import useUserStorage from "../store/userInstance";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-let user = useUserStorage().user;
+
 onMounted(() => {
   // is used to initialize the Google Identity Services for JavaScript, which enables integration with Google’s authentication and authorization services.
   google.accounts.id.initialize({
@@ -20,10 +20,11 @@ onMounted(() => {
     callback: (response) => {
       try {
         const credential = jose.decodeJwt(response.credential);
-        user = useUserStorage().signInUser(credential);
+        const logInUser = useUserStorage().signInUser(credential);
+        useUserStorage().updateUser({ ...logInUser });
         //confirm user sign in
-        user.isSignIn = true;
-        console.log("Sign in user infor ==>", user);
+        useUserStorage().user.isSignIn = true;
+        const user = useUserStorage().user;
         localStorage.setItem("googleToken", response.credential);
       } catch (error) {
         console.log("Google sign in error ==>", error);
@@ -41,9 +42,9 @@ onMounted(() => {
 });
 
 watch(
-  () => user,
-  () => {
-    console.log("pppppppp");
+  () => useUserStorage().user,
+  (newV, oldV) => {
+    //redirect uri
     router.push("/home");
   }
 );
