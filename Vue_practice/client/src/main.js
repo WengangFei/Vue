@@ -5,8 +5,8 @@ import routes from './router/routes'
 import { createRouter, createWebHistory } from 'vue-router';
 import { createPinia } from 'pinia';
 import useUserStorage from './store/userInstance';
+// localStorage.clear();
 
-console.log('main page')
 const app = createApp(App);
 
 app.use(createPinia());
