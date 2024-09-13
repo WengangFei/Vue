@@ -6,7 +6,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import { createPinia } from 'pinia';
 import useUserStorage from './store/userInstance';
 
-
+console.log('main page')
 const app = createApp(App);
 
 app.use(createPinia());
@@ -17,14 +17,26 @@ const router = createRouter({
 })
 
 //authenticate the auth before direct to other routes
-router.beforeEach((to,from,next)=>{
-    if(to.path !== '/signin' && !localStorage.getItem('googleToken')){
-        next('/signin');
+router.beforeEach((to, from, next) => {
+  // Check if the route requires authentication
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // Get the token from localStorage or some other storage
+    const token = localStorage.getItem('googleToken');
+    
+    if (!token) {
+      // If no token is found, redirect to login page
+      next({
+        path: '/signin',
+      });
+    } else {
+      // If token is found, proceed to the route
+      next();
     }
-    else{
-        next();
-    }
-})
+  } else {
+    // If no authentication is required, proceed as normal
+    next();
+  }
+});
 
 
 app.use(router);
