@@ -23,9 +23,8 @@ const routes = [
         component:GoogleSignin
     },
     {   path:'/',
-        name:'App',
-        component:App,
-        meta: { requiresAuth: true }
+        name:'Signin',
+        component:GoogleSignin
     }
 ]
 

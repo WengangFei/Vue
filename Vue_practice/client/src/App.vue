@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <!-- <OptionAPI /> -->
+    <OptionAPI />
     <!-- <TestVmodel /> -->
     New Test
     <hr class="border-red-500 m-4" />
