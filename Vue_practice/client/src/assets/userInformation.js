@@ -1,4 +1,6 @@
 import * as jose from "jose";
+import { useRouter } from "vue-router";
+
 
 class User{
     constructor(client_id){
@@ -19,6 +21,7 @@ class User{
         const token = JSON.parse(localStorage.getItem('googleToken'));
         if(token && new Date() < new Date(token.expirationTime)){
             this.setUpUser(jose.decodeJwt(token.token));
+            console.log(new Date() > new Date(token.expirationTime))
         }
         else{
             this.loginUser();
@@ -40,6 +43,9 @@ class User{
 
     loginUser(){  
         console.log('fresh sign in')
+        const router = useRouter();
+        router.push('/signin');
+            
         //initialize the Google Identity Services for JavaScript, which enables integration with Google’s authentication and authorization services.
         google.accounts.id.initialize({
             client_id: this.client_id,
