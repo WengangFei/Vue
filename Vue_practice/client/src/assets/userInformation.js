@@ -2,6 +2,7 @@ import * as jose from "jose";
 import { useRouter } from "vue-router";
 
 
+
 class User{
     constructor(client_id){
         this.name = undefined,
@@ -21,7 +22,7 @@ class User{
         const token = JSON.parse(localStorage.getItem('googleToken'));
         if(token && new Date() < new Date(token.expirationTime)){
             this.setUpUser(jose.decodeJwt(token.token));
-            console.log(new Date() > new Date(token.expirationTime))
+         
         }
         else{
             this.loginUser();
@@ -44,12 +45,20 @@ class User{
     loginUser(){  
         console.log('fresh sign in')
         const router = useRouter();
-        router.push('/signin');
-            
+        router.push('/');
+    
         //initialize the Google Identity Services for JavaScript, which enables integration with Google’s authentication and authorization services.
         google.accounts.id.initialize({
             client_id: this.client_id,
-            callback: (response) => {
+            callback: async (response) => {
+                
+                const clientId = this.client_id;
+                const redirectUri = 'http://localhost:3000/auth/callback';
+                const scope = 'https://www.googleapis.com/auth/drive'; // Adjust scope as needed
+                const responseType = 'code'; // Request an authorization code
+                window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`;
+                //verify token
+                await this.verifyToken(response.credential);
                 try {
                 const credential = jose.decodeJwt(response.credential);
                 this.setUpUser(credential);
@@ -60,7 +69,8 @@ class User{
                 }))
                 } catch (error) {
                 console.log("Google sign in error ==>", error);
-                }
+                };
+           
             },
              auto_select: true,
         });
@@ -78,6 +88,25 @@ class User{
             }
         );
     }
+
+    async verifyToken(token){
+        try{
+            const res = await fetch('http://localhost:3000/verify-token',{
+                method:'POST',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ idToken:token })
+            });
+
+            const data = await res.json();
+            console.log('Backend response:', data);
+        }catch(error){
+             const router = useRouter();
+             router.push('/')
+            console.error('Error verifying token:', error);  
+        }
+    };
 }
 
 export { User }

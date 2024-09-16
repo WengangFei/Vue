@@ -17,15 +17,16 @@ const routes = [
         component: AboutPage,
         meta: { requiresAuth: true }
     },
-    {
-        path:'/signin',
-        name:'Signin',
-        component:GoogleSignin
-    },
     {   path:'/',
         name:'Signin',
         component:GoogleSignin
-    }
+    },
+    // Catch-all route for 404 Not Found
+    {
+        path: '/:pathMatch(.*)*',
+        name: '/',
+        component: GoogleSignin,
+    },
 ]
 
 

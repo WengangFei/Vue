@@ -18,8 +18,9 @@
       </button>
       <p>
         Name:
-        <input v-model="name" class="border-2 rounded-md p-1 m-2" />
+        <input v-model.lazy="name" class="border-2 rounded-md p-1 m-2" />
       </p>
+      <p>Nickname: {{ myName }}</p>
       <children-option
         v-model:input1="myName"
         v-model:input2="mount"
@@ -40,7 +41,7 @@ export default {
     return {
       counter: 5,
       mount: 0,
-      myName: "",
+      myName: "guoguo",
     };
   },
   //modifying data

@@ -1,6 +1,6 @@
 <template>
-  <input :value="input1" @input="$emit('update:input1',$event.target.value)"  class="border-2"></input>
-  <input :value="input2" @input="$emit('update:input2',$event.target.value)"  class="border-2"></input>
+  <input :value="input1" @input="$emit('update:input1',$event.target.vale)" class="border-2"></input>
+  <input :value="input2" @input="$emit('update:input2',$event.target.value)" class="border-2"></input>
 </template>
 
 <script>

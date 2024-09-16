@@ -10,7 +10,6 @@ import useUserStorage from './store/userInstance';
 const app = createApp(App);
 
 app.use(createPinia());
-// localStorage.clear();
 const router = createRouter({
     history: createWebHistory(),
     routes
@@ -26,7 +25,7 @@ router.beforeEach((to, from, next) => {
     if (!token) {
       // If no token is found, redirect to login page
       next({
-        path: '/signin',
+        path: '/',
       });
     } else {
       // If token is found, proceed to the route
