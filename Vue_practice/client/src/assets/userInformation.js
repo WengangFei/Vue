@@ -51,14 +51,10 @@ class User{
         google.accounts.id.initialize({
             client_id: this.client_id,
             callback: async (response) => {
-                
-                const clientId = this.client_id;
-                const redirectUri = 'http://localhost:3000/auth/callback';
-                const scope = 'https://www.googleapis.com/auth/drive'; // Adjust scope as needed
-                const responseType = 'code'; // Request an authorization code
-                window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=${responseType}`;
                 //verify token
-                await this.verifyToken(response.credential);
+                await this.verifyToken(response.credential);//post
+                //obtain the refresh token
+                // this.redirectToGoogle();//get
                 try {
                 const credential = jose.decodeJwt(response.credential);
                 this.setUpUser(credential);
@@ -87,6 +83,18 @@ class User{
                 shape: "pill",
             }
         );
+    }
+
+    async redirectToGoogle(){
+        const clientId = this.client_id;
+        const redirectUri = 'http://localhost:3000/auth/callback'; 
+        const scope = 'email profile';
+        const responseType = 'code';
+        const accessType = 'offline';
+
+        const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=${accessType}`;
+
+        window.location.href = url;
     }
 
     async verifyToken(token){
