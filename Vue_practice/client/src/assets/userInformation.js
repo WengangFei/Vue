@@ -44,8 +44,7 @@ class User{
 
     loginUser(){  
         console.log('fresh sign in')
-        const router = useRouter();
-        router.push('/');
+        
     
         //initialize the Google Identity Services for JavaScript, which enables integration with Google’s authentication and authorization services.
         google.accounts.id.initialize({
@@ -54,7 +53,7 @@ class User{
                 //verify token
                 await this.verifyToken(response.credential);//post
                 //obtain the refresh token
-                // this.redirectToGoogle();//get
+                this.redirectToGoogle();//get
                 try {
                 const credential = jose.decodeJwt(response.credential);
                 this.setUpUser(credential);
@@ -82,6 +81,7 @@ class User{
                 size: "large",
                 shape: "pill",
             }
+
         );
     }
 
@@ -93,8 +93,14 @@ class User{
         const accessType = 'offline';
 
         const url = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${responseType}&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&access_type=${accessType}`;
-
-        window.location.href = url;
+        try{
+            window.location.href = url;
+           
+        }catch(e){
+            const router = useRouter();
+            router.push('/');
+            console.log('Can not reach to google oauth2 server.',e)
+        }
     }
 
     async verifyToken(token){

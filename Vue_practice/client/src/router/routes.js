@@ -2,6 +2,7 @@
 import HomePage from '../components/HomePage.vue';
 import AboutPage from '../components/AboutPage.vue';
 import GoogleSignin from '../components/GoogleSignin.vue';
+import CallBack from '../components/CallBack.vue'
 import App from '../App.vue';
 
 const routes = [
@@ -26,6 +27,11 @@ const routes = [
         path: '/:pathMatch(.*)*',
         name: '/',
         component: GoogleSignin,
+    },
+     {
+        path: '/callback',
+        name: 'Callback',
+        component: CallBack,
     },
 ]
 

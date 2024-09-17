@@ -1,6 +1,5 @@
 <template>
-  <div v-if="user.isSignIn">The Page is not Exist</div>
-  <div v-else>Google Sign in button</div>
+  <div>Google Sign In Page</div>
   <div id="googleSignInButton" class="center-x"></div>
 </template>
 
@@ -19,13 +18,13 @@ const env = envConfigs;
 onMounted(() => {
   user.renderButton();
 });
-watch(
-  () => user.isSignIn,
-  () => {
-    //redirect uri
-    router.push("/home");
-  }
-);
+// watch(
+//   () => user.isSignIn,
+//   () => {
+//     //redirect uri
+//     router.push("/home");
+//   }
+// );
 </script>
 
 <style lang="scss" scoped></style>

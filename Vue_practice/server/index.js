@@ -63,9 +63,10 @@ app.get('/auth/callback', async (req, res) => {
 
     const { access_token, refresh_token, expires_in } = response.data;
 
-    
-
-    res.json({ accessToken: access_token, refreshToken: refresh_token, expiresIn: expires_in });
+    // Redirect to the homepage with tokens as query parameters
+    // res.redirect('http://localhost:5173/home');
+     const redirectUrl = `http://localhost:5173/callback?accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`;
+    res.redirect(redirectUrl);
   } catch (error) {
     console.error('Error exchanging authorization code:');
     res.status(500).json({ error: 'Failed to exchange authorization code' });
