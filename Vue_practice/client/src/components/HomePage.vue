@@ -14,7 +14,7 @@ function handleAuthCallback() {
   if (accessToken && refreshToken && expiresIn) {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
-    localStorage.setItem("tokenExpiry", Date.now() + expiresIn * 1000);
+    localStorage.setItem("tokenExpiry", expiresIn);
   }
 }
 

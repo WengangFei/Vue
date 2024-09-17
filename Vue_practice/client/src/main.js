@@ -39,3 +39,5 @@ router.beforeEach((to, from, next) => {
 
 app.use(router);
 app.mount('#app')
+
+console.log(Date.now())

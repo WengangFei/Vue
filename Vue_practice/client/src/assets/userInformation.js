@@ -56,6 +56,7 @@ class User{
                 this.redirectToGoogle();//get
                 try {
                 const credential = jose.decodeJwt(response.credential);
+
                 this.setUpUser(credential);
                 //confirm user sign in
                 localStorage.setItem("googleToken", JSON.stringify({

@@ -16,16 +16,19 @@ export default {
       const expiresIn = urlParams.get("expiresIn");
 
       if (accessToken && refreshToken && expiresIn) {
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
-        localStorage.setItem("tokenExpiry", Date.now() + expiresIn * 1000);
-
+        this.storeTokenData(accessToken, refreshToken, expiresIn);
         // Redirect to home page
         const router = useRouter();
         router.push("/home");
       } else {
         console.error("Authentication callback missing tokens");
       }
+    },
+    //store token
+    storeTokenData(accessToken, refreshToken, expiresIn) {
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+      localStorage.setItem("tokenExpiry", expiresIn);
     },
   },
 };

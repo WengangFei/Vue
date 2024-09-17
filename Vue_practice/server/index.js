@@ -4,8 +4,13 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const express = require('express');
 const { OAuth2Client } = require('google-auth-library');
+const jwt = require('jsonwebtoken');
 const app = express();
 const port = 3000;
+require('dotenv').config();
+
+// const crypto = require('crypto');
+// console.log(crypto.randomBytes(64).toString('hex'))
 
 // Replace with your Google client ID
 const CLIENT_ID = config.dev.client_id;
@@ -62,15 +67,56 @@ app.get('/auth/callback', async (req, res) => {
     });
 
     const { access_token, refresh_token, expires_in } = response.data;
+    const expires_mils = Date.now() + (expires_in * 1000);
+
+    console.log('expired time ==>',new Date(expires_mils).toLocaleString(),);
 
     // Redirect to the homepage with tokens as query parameters
     // res.redirect('http://localhost:5173/home');
-     const redirectUrl = `http://localhost:5173/callback?accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_in}`;
+     const redirectUrl = `http://localhost:5173/callback?accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_mils}`;
     res.redirect(redirectUrl);
   } catch (error) {
     console.error('Error exchanging authorization code:');
     res.status(500).json({ error: 'Failed to exchange authorization code' });
   }
+});
+
+//Endpoint to refresh token
+app.post('/auth/refresh',(req,res)=>{
+  const { refreshToken } = JSON.parse(req.body);
+  if(!refreshToken){
+    return res.sendStatus(403);//Forbidden
+  }
+
+  jwt.verify(refreshToken,REFRESH_TOKEN_SECRET,(err,user)=>{
+    if(err) return res.sendStatus(403); //forbidden
+    const accessToken = jwt.sign({username:user.username},ACCESS_TOKEN_SECRET,{expiresIn: '1h'});
+    res.json({
+      accessToken,
+      idToken:accessToken,
+      refreshToken
+    })
+  })
+
+}),
+
+// Endpoint to login (for demonstration purposes)
+app.post('/', (req, res) => {
+  const { username, password } = req.body;
+
+  // Authenticate user here (omitted for brevity)
+  const user = { username };
+
+  const accessToken = jwt.sign(user, process.env.VITE_ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
+  const refreshToken = jwt.sign(user,VITE_REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
+
+  localStorage.setItem('refreshToken',refreshToken);
+
+  res.json({
+    accessToken,
+    idToken: accessToken,
+    refreshToken
+  });
 });
 
 
