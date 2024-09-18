@@ -67,13 +67,13 @@ app.get('/auth/callback', async (req, res) => {
     });
 
     const { access_token, refresh_token, expires_in } = response.data;
-    const expires_mils = Date.now() + (expires_in * 1000);
+    console.log('expires_in =>',expires_in)
+    const expires_seconds = Math.floor((Date.now() + (expires_in * 1000)) / 1000);
 
-    console.log('expired time ==>',new Date(expires_mils).toLocaleString(),);
+    console.log('expired time ==>',new Date(expires_seconds).toLocaleString());
 
     // Redirect to the homepage with tokens as query parameters
-    // res.redirect('http://localhost:5173/home');
-     const redirectUrl = `http://localhost:5173/callback?accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_mils}`;
+     const redirectUrl = `http://localhost:5173/callback?accessToken=${access_token}&refreshToken=${refresh_token}&expiresIn=${expires_seconds}`;
     res.redirect(redirectUrl);
   } catch (error) {
     console.error('Error exchanging authorization code:');
