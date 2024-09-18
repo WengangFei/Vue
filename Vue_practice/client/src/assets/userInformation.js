@@ -56,7 +56,6 @@ class User{
                 this.redirectToGoogle();//get
                 try {
                 const credential = jose.decodeJwt(response.credential);
-// console.log('id-token expiry =>',credential.exp)
                 this.setUpUser(credential);
                 //confirm user sign in
                 localStorage.setItem("googleToken", JSON.stringify({

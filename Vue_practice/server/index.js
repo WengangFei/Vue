@@ -78,42 +78,28 @@ app.get('/auth/callback', async (req, res) => {
 });
 
 //Endpoint to refresh token
-app.post('/auth/refresh',(req,res)=>{
-  const { refreshToken } = JSON.parse(req.body);
-  if(!refreshToken){
-    return res.sendStatus(403);//Forbidden
+app.post('/auth/refresh',async (req,res)=>{
+  const GOOGLE_OAUTH_TOKEN_URL = 'https://oauth2.googleapis.com/token';
+  const { refreshToken, clientId, clientSecret } = req.body;
+
+  if (!refreshToken || !clientId || !clientSecret) {
+    return res.status(400).json({ message: 'Refresh token, client ID, and client secret are required' });
   }
 
-  jwt.verify(refreshToken,REFRESH_TOKEN_SECRET,(err,user)=>{
-    if(err) return res.sendStatus(403); //forbidden
-    const accessToken = jwt.sign({username:user.username},ACCESS_TOKEN_SECRET,{expiresIn: '1h'});
-    res.json({
-      accessToken,
-      idToken:accessToken,
-      refreshToken
-    })
-  })
-
+  try {
+    const response = await axios.post(GOOGLE_OAUTH_TOKEN_URL, {
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token'
+    });
+console.log('resp from server =>',response.data)
+    const { access_token: newAccessToken, id_token: newIdToken, expires_in:newExpiresin } = response.data;
+    res.json({ idToken: newIdToken, accessToken: newAccessToken, expiresIn:newExpiresin });
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid refresh token or client credentials', error: error.message });
+  }
 }),
-
-// Endpoint to login (for demonstration purposes)
-app.post('/', (req, res) => {
-  const { username, password } = req.body;
-
-  // Authenticate user here (omitted for brevity)
-  const user = { username };
-
-  const accessToken = jwt.sign(user, process.env.VITE_ACCESS_TOKEN_SECRET, { expiresIn: '1h' });
-  const refreshToken = jwt.sign(user,VITE_REFRESH_TOKEN_SECRET, { expiresIn: '7d' });
-
-  localStorage.setItem('refreshToken',refreshToken);
-
-  res.json({
-    accessToken,
-    idToken: accessToken,
-    refreshToken
-  });
-});
 
 
 
