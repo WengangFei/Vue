@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: 'https://your-backend.com'
+  baseURL: 'https//localhost:3000'
 });
 
 api.interceptors.request.use(async (config) => {
@@ -43,8 +43,10 @@ const refreshTokens = async () => {
 
 const isTokenExpired = () => {
   const expiryTime = localStorage.getItem('tokenExpiry');
-  return Date.now() > expiryTime;
+  return Date.now() > expiryTime * 1000;
 };
+
+
 
 
 

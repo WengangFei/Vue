@@ -38,6 +38,4 @@ router.beforeEach((to, from, next) => {
 });
 
 app.use(router);
-app.mount('#app')
-
-console.log(new Date(1726634106 * 1000).toLocaleString())
+app.mount('#app');
