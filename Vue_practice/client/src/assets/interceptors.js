@@ -53,13 +53,13 @@ const isTokenExpired = () => {
 };
 
 const storeTokenData = (accessToken, idToken, expiresIn) =>{
-  
+
   const expires_seconds = Math.floor((Date.now() + (expiresIn * 1000)) / 1000);
   localStorage.setItem("accessToken", accessToken);
   localStorage.setItem("tokenExpiry", expires_seconds);
   localStorage.setItem("googleToken", JSON.stringify({
     token:idToken,
-    expirationTime:new Date(expiresIn).toLocaleString()
+    expirationTime:new Date(expires_seconds * 1000).toLocaleString()
   }))
 
 };
