@@ -19,7 +19,7 @@ const router = useRouter();
 
 const changeToAboutPage = ()=>{
   api.get('/about')
-  // router.push('/about')
+  router.push('/about')
 }
 
 // console.log("home user ==>", useUserStorage().user);

@@ -6,6 +6,8 @@
     <hr class="border-red-500 m-4" />
     <!-- <TestSlot /> -->
     <RouterView />
+    <hr class="border-red-500 m-4" />
+    <TestPage />
   </div>
 </template>
 
@@ -15,6 +17,7 @@ import GoogleSignin from "./components/GoogleSignin.vue";
 import OptionAPI from "./components/OptionAPI.vue";
 import TestSlot from "./components/TestSlot.vue";
 import TestVmodel from "./components/TestVmodel.vue";
+import TestPage from "./components/TestPage.vue";
 
 export default {
   name: "App",
@@ -23,6 +26,7 @@ export default {
     TestVmodel,
     TestSlot,
     GoogleSignin,
+    TestPage,
   },
 
   methods: {

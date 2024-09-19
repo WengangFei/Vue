@@ -93,7 +93,7 @@ app.post('/auth/refresh',async (req,res)=>{
       refresh_token: refreshToken,
       grant_type: 'refresh_token'
     });
-console.log('resp from server =>',response.data)
+  // console.log('resp from server =>',response.data)
     const { access_token: newAccessToken, id_token: newIdToken, expires_in:newExpiresin } = response.data;
     res.json({ idToken: newIdToken, accessToken: newAccessToken, expiresIn:newExpiresin });
   } catch (error) {

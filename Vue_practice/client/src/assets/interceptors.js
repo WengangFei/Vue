@@ -9,9 +9,7 @@ const api = axios.create({
 
 api.interceptors.request.use(async (config) => {
   console.log('interceptor is running ......')
-
-  if (!isTokenExpired()) {
-    console.log('chencking ....')
+  if (isTokenExpired()) {
     await refreshTokens();
   }
 
@@ -24,6 +22,7 @@ api.interceptors.request.use(async (config) => {
 });
 // token expired and sent a post request to back end to request new access token with the refresh token
 const refreshTokens = async () => {
+  console.log('refreshTokens is running ......');
   const refreshToken = localStorage.getItem('refreshToken');
   const clientId = envConfig.dev.client_id;
   const clientSecret = envConfig.dev.client_secret;
