@@ -8,7 +8,9 @@
         Click
     </button>
     <hr class="border-red-500 m-4" />
-    <ul v-if="assignmentsState.length">
+    {{ inprogress.length }}
+    {{ completed.length }}
+    <ul v-if="inprogress.length">
         <p>In progress</p>
         <li v-for="assignment in assignments" :key="assignment.name">
         <label v-if="!assignment.completed">
@@ -19,7 +21,7 @@
         </li>
     </ul>
 
-    <ul class="mt-4" v-if="assignmentsState.length">
+    <ul class="mt-4" v-if="completed.length">
         <p>Completed</p>
         <li v-for="assignment in assignments" :key="assignment.name">
         <label v-if="assignment.completed">
@@ -65,7 +67,10 @@
             }
         },
         computed:{
-            assignmentsState() {
+            inprogress() {
+                return this.assignments.filter(assignment => !assignment.completed);
+            },
+            completed() {
                 return this.assignments.filter(assignment => assignment.completed);
             }
         },
