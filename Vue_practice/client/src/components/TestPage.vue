@@ -31,15 +31,37 @@
         
         </li>
     </ul>
+    <hr class="border-red-500 m-4" />
+    <test-page-child :parent="data" :fei="data"><br />
+        Default Content<br />
+        Named Slot:
+        <template #child>Named Slot Content</template>
+        <template #child2> Named Slot 2 Content<br /></template>
+        <template #scopedSlot="slotProps"> Scoped Slot Content: {{ slotProps.child.group }} {{ slotProps.child.color }}</template>
 
+    </test-page-child>
+    <hr class="border-red-500 m-4" />
+    <button-custom 
+        content="Change"    
+        bgColor="bg-red-500"    
+        textColorName="text-white"
+      
+        >
+    </button-custom>
+   
+   
 </template>
 
 <script>
+import TestPageChild from './TestPageChild.vue';
+import ButtonCustom from './ButtonCustom.vue';
+
     export default {
         data() {
             return {
                 data: {
-                    name: 'test',
+                    name: 'From parent test',
+                    age:40
                 },
                 buttonStyle:'bg-red-400 text-white px-1 rounded-md',
                 isChanged:false,
@@ -76,6 +98,11 @@
         },
         created() {
             
-        }
+        },
+        components: { 
+            TestPageChild,
+            ButtonCustom,
+         }
     }
+
 </script>

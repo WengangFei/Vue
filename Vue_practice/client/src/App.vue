@@ -15,7 +15,6 @@
 import { RouterView } from "vue-router";
 import GoogleSignin from "./components/GoogleSignin.vue";
 import OptionAPI from "./components/OptionAPI.vue";
-import TestSlot from "./components/TestSlot.vue";
 import TestVmodel from "./components/TestVmodel.vue";
 import TestPage from "./components/TestPage.vue";
 
@@ -24,7 +23,6 @@ export default {
   components: {
     OptionAPI,
     TestVmodel,
-    TestSlot,
     GoogleSignin,
     TestPage,
   },
