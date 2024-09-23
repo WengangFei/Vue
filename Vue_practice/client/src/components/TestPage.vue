@@ -8,8 +8,15 @@
         Click
     </button>
     <hr class="border-red-500 m-4" />
-    {{ inprogress.length }}
-    {{ completed.length }}
+    {{  allTags }}
+    <div class="flex">
+        <button 
+            v-for="tag in allTags" :key="tag.name" 
+            :class="tagStyle(tag.selected)"
+            @click="addSelectedTages(tag.name)">
+            {{ tag.name }}
+        </button>
+    </div>
     <ul v-if="inprogress.length">
         <p>In progress</p>
         <li v-for="assignment in assignments" :key="assignment.name">
@@ -31,6 +38,7 @@
         
         </li>
     </ul>
+    <form-submit @add-assignment="addNewAssignment"></form-submit>
     <hr class="border-red-500 m-4" />
     <test-page-child :parent="data" :fei="data"><br />
         Default Content<br />
@@ -55,6 +63,9 @@
 <script>
 import TestPageChild from './TestPageChild.vue';
 import ButtonCustom from './ButtonCustom.vue';
+import FormSubmit from './FormSubmit.vue';
+import { all } from 'axios';
+
 
     export default {
         data() {
@@ -68,17 +79,23 @@ import ButtonCustom from './ButtonCustom.vue';
                 assignments:[
                     {
                         name:'assignment 1',
-                        completed:false
+                        completed:false,
+                        tag:'reading'
                     },
                     {
                         name:'assignment 2',
-                        completed:false
+                        completed:false,
+                        tag:'math',
                     },
                     {
                         name:'assignment 3',
-                        completed:false
+                        completed:false,
+                        tag:'english',
                     }
-                ]
+                ],
+ 
+                allTags:[],
+               
             }
         },
         methods: {
@@ -86,14 +103,50 @@ import ButtonCustom from './ButtonCustom.vue';
                 this.isChanged = !this.isChanged;
                 this.isChanged ? this.buttonStyle = 'bg-green-400 text-white px-1 rounded-md' : this.buttonStyle = 'bg-red-400 text-white px-1 rounded-md';
                 this.isChanged ? this.data.name = 'changed' : this.data.name = 'test';
+            },
+            addNewAssignment(payload) {
+                this.assignments.push({
+                    name: payload.name,
+                    completed: false,
+                    tag: payload.tag,
+                })
+            },
+            addSelectedTages(tag) { 
+                this.allTags = this.allTags.map(t => {
+                    if(t.name === tag) {
+                        t.selected = !t.selected;
+                    }
+                    return t;
+                });
+         
+                // this.assignments = this.assignments.map(assignment => {
+                //     if(this.selectedTags.includes(assignment.tag)) console.log(assignment.tag);
+                    
+                // })
+
+                console.log(this.assignments)
+            },
+            initializeAllTags() {
+                const tags = [...new Set(this.assignments.map(assignment => assignment.tag))];
+                this.allTags = tags.map(tag => ({ name: tag, selected: false }));
+            },
+            tagStyle(flag){
+                return !flag ? "border-2 border-red-500 rounded-md px-1 mx-1 hover:bg-red-500 hover:text-white " : "bg-green-500 border-2 border-red-500 rounded-md px-1 mx-1"
             }
         },
+        mounted() {
+            this.initializeAllTags();
+        },
+
         computed:{
             inprogress() {
                 return this.assignments.filter(assignment => !assignment.completed);
             },
             completed() {
                 return this.assignments.filter(assignment => assignment.completed);
+            },
+            selectedTags(){
+                return this.allTags.filter(t => t.selected).map(obj => Object.values(obj)[0]);
             }
         },
         created() {
@@ -102,7 +155,7 @@ import ButtonCustom from './ButtonCustom.vue';
         components: { 
             TestPageChild,
             ButtonCustom,
+            FormSubmit,
          }
     }
-
 </script>
