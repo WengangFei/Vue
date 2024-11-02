@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite & json-server db.json -p 4000",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -18,11 +18,12 @@
     "pinia": "^2.2.2",
     "vue": "^3.4.37",
     "vue-google-oauth2": "^1.5.10",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
     "autoprefixer": "^10.4.20",
+    "json-server": "^1.0.0-beta.3",
     "postcss": "^8.4.41",
     "tailwindcss": "^3.4.10",
     "unplugin-vue-components": "^0.27.4",

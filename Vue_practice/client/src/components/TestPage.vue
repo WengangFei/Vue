@@ -11,10 +11,10 @@
     {{  allTags }}
     <div class="flex">
         <button 
-            v-for="tag in allTags" :key="tag.name" 
-            :class="tagStyle(tag.selected)"
-            @click="addSelectedTages(tag.name)">
-            {{ tag.name }}
+            v-for="tag in allTags" :key="tag" 
+            :class="tagStyle(tag)"
+            @click="addSelectedTages(tag)">
+            {{ tag }}
         </button>
     </div>
     <ul v-if="inprogress.length">
@@ -27,7 +27,7 @@
         
         </li>
     </ul>
-
+{{ args }}
     <ul class="mt-4" v-if="completed.length">
         <p>Completed</p>
         <li v-for="assignment in assignments" :key="assignment.name">
@@ -38,7 +38,7 @@
         
         </li>
     </ul>
-    <form-submit @add-assignment="addNewAssignment"></form-submit>
+    <form-submit @add-assignment="args=$event"></form-submit>
     <hr class="border-red-500 m-4" />
     <test-page-child :parent="data" :fei="data"><br />
         Default Content<br />
@@ -93,8 +93,7 @@ import { all } from 'axios';
                         tag:'english',
                     }
                 ],
- 
-                allTags:[],
+                args:''
                
             }
         },
@@ -112,27 +111,26 @@ import { all } from 'axios';
                 })
             },
             addSelectedTages(tag) { 
-                this.allTags = this.allTags.map(t => {
-                    if(t.name === tag) {
-                        t.selected = !t.selected;
-                    }
-                    return t;
-                });
-         
-                // this.assignments = this.assignments.map(assignment => {
-                //     if(this.selectedTags.includes(assignment.tag)) console.log(assignment.tag);
-                    
-                // })
+                
+            this.assignments.forEach(assignment => {
+                if(assignment.tag === tag && !assignment.selected) {
+                    assignment['selected'] = true;
+                }
+                else if(assignment.tag === tag && assignment.selected) {
+                    assignment['selected'] = false;
+                }
+            })
 
-                console.log(this.assignments)
+            // console.log(this.assignments)
             },
             initializeAllTags() {
                 const tags = [...new Set(this.assignments.map(assignment => assignment.tag))];
                 this.allTags = tags.map(tag => ({ name: tag, selected: false }));
             },
-            tagStyle(flag){
+            tagStyle(tag){
+                const flag = this.assignments.filter(t => t.tag === tag)[0].selected;
                 return !flag ? "border-2 border-red-500 rounded-md px-1 mx-1 hover:bg-red-500 hover:text-white " : "bg-green-500 border-2 border-red-500 rounded-md px-1 mx-1"
-            }
+            },
         },
         mounted() {
             this.initializeAllTags();
@@ -147,6 +145,9 @@ import { all } from 'axios';
             },
             selectedTags(){
                 return this.allTags.filter(t => t.selected).map(obj => Object.values(obj)[0]);
+            },
+            allTags() {
+                return [...new Set(this.assignments.map(assignment => assignment.tag))];
             }
         },
         created() {

@@ -1,8 +1,7 @@
 import { createApp } from 'vue'
 import './index.css'
 import App from './App.vue'
-import routes from './router/routes'
-import { createRouter, createWebHistory } from 'vue-router';
+import router from './router/routes.js';
 import { createPinia } from 'pinia';
 import useUserStorage from './store/userInstance';
 // localStorage.clear();
@@ -10,10 +9,7 @@ import useUserStorage from './store/userInstance';
 const app = createApp(App);
 
 app.use(createPinia());
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
+
 
 //authenticate the auth before direct to other routes
 router.beforeEach((to, from, next) => {

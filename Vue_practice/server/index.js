@@ -9,6 +9,9 @@ const app = express();
 const port = 3000;
 require('dotenv').config();
 
+//knex work with postgreSQL
+const knex = require('./db/db');
+
 // const crypto = require('crypto');
 // console.log(crypto.randomBytes(64).toString('hex'))
 
@@ -46,6 +49,10 @@ app.post('/verify-token', async (req, res) => {
      res.status(500).send('Authentication error');
   }
 });
+
+app.get('/',(req,res)=>{
+  res.send('Server listening on port 3000 response......')
+})
 
 app.get('/auth/callback', async (req, res) => {
   console.log('server received the get request info......');
@@ -101,8 +108,65 @@ app.post('/auth/refresh',async (req,res)=>{
   }
 }),
 
+//insert data to table
+app.post('/users',(req,res)=>{
+  knex('users').insert({
+    firstName:'Tina',
+    lastName:'Washington'
+  }).then(()=>{
+    knex.select().from( 'users').then(users=>{
+      res.send(users)
+    })
+  })
+  // knex.raw('insert into users (first_name,last_name) values(?,?)',['Tina','Washing']).then(()=>{
+  //   knex.select().from('users').then(users=>{
+  //     res.send(users)
+  //   })
+  // })
+})
 
+//modify data in table
+app.put('/users',(req,res)=>{
+  knex('users').where('id',2).update({last_name: 'Jen'}).then(()=>{
+    knex.select().from('users').then((user)=>{
+      res.send(user)
+    })
+  })
+})
 
-app.listen(port, () => {
+//delete a data 
+app.delete('/users',(req,res)=>{
+  knex('users').where('id',2).del().then(()=>{
+    knex.select().from('users').then(users=>{
+      res.send(users)
+    })
+  })
+})
+
+//retrieve data
+app.get('/users',(req,res)=>{
+  knex.select().from('users').then((users)=>{
+    res.send(users)
+  })  
+  // knex.raw('select * from users').then(users=>{
+  //   res.send(users.rows)
+  // })
+})
+
+app.get('/api/db',(req,res)=>{
+  knex.select().from('users').then((users)=>{
+    res.send(users)
+  })
+  console.log('Received the from end request, ', req.url);
+})
+
+app.listen(port, async () => {
+  try{
+    await knex.raw('SELECT 1');
+    console.log('Knex configured and data base connected ......')
+  }catch(e){
+    console.log('Data base error occur......')
+  }
+
   console.log(`Server running at http://localhost:${port}`);
 });

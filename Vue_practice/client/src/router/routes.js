@@ -4,6 +4,8 @@ import AboutPage from '../components/AboutPage.vue';
 import GoogleSignin from '../components/GoogleSignin.vue';
 import CallBack from '../components/CallBack.vue'
 import App from '../App.vue';
+import { createRouter, createWebHistory } from 'vue-router';
+import FetchDataFromDB from '../components/FetchDataFromDB.vue';
 
 const routes = [
     {
@@ -28,13 +30,24 @@ const routes = [
         name: '/',
         component: GoogleSignin,
     },
-     {
+    {
         path: '/callback',
         name: 'Callback',
         component: CallBack,
     },
+    {
+        path: '/fetch-data',
+        name: 'FetchDataFromDB',
+        component: FetchDataFromDB
+    }  
+
 ]
 
+const router = createRouter({
+    history: createWebHistory(),
+    routes
+})
 
 
-export default routes
+
+export default router
