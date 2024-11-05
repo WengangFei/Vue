@@ -1,8 +1,16 @@
 <template>
   <div class="p-6">
+    <ComponentParent text="Parent"/>
+    <hr class="border-red-500 m-4" />
     <!-- <OptionAPI /> -->
     <!-- <TestVmodel /> -->
-    New Test
+    <p :class="{'change-color': isChanged}">New Test</p>
+    <button 
+      class="bg-red-500 text-white px-1 rounded-md ml-4" 
+      @click="()=>isChanged = !isChanged"
+    >
+      Change To {{ isChanged ? 'Black' : 'Red' }}
+    </button>
     <ConnectDB />
     <hr class="border-red-500 m-4" />
     <CompositionApiPractice />
@@ -20,7 +28,6 @@
     <RouterView />
     <hr class="border-red-500 m-4" />
     <TestPage />
-    <ParentComponent />
   </div>
 </template>
 
@@ -30,10 +37,11 @@ import GoogleSignin from "./components/GoogleSignin.vue";
 import OptionAPI from "./components/OptionAPI.vue";
 import TestVmodel from "./components/TestVmodel.vue";
 import TestPage from "./components/TestPage.vue";
-import ParentComponent from "./components/ParentComponent.vue";
 import FetchData from "./components/FetchData.vue";
 import CompositionApiPractice from "./components/CompositionApiPractice.vue";
 import ConnectDB from "./components/ConnectDB.vue";
+import ComponentParent from "./components/ComponentParent.vue";
+
 
 export default {
   name: "App",
@@ -42,10 +50,10 @@ export default {
     TestVmodel,
     GoogleSignin,
     TestPage,
-    ParentComponent,
     FetchData,
     CompositionApiPractice,
-    ConnectDB
+    ConnectDB,
+    ComponentParent,
   },
 
   methods: {
@@ -54,7 +62,17 @@ export default {
       console.log("Google ID Token:", idToken);
     },
   },
+
+  data(){
+    return {
+      isChanged: false,
+    }
+  }
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.change-color {
+  color: red;
+}
+</style>

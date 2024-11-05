@@ -19,26 +19,20 @@ import { ref, computed, watch } from "vue";
 
 const age = ref(10);
 const doubleAge = computed(() => age.value * 2);
-const firstName = ref("Fei");
-const lastName = ref("Wengang");
+const firstName = ref("");
+const lastName = ref("");
 const fullName = computed({
-  get: () => `${firstName.value} ${lastName.value}`,
-  set: (newValue) => {
-    const [first, last] = newValue.split(" ");
-    firstName.value = first || "";
-    lastName.value = last || "";
-  },
+    get: () => firstName.value + " " + lastName.value,
+    set: (value) => {
+        const names = value.split(" ");
+        firstName.value = names[0] || "";
+        lastName.value = names[1] || "";
+    },
 });
-// const fullName = computed(()=>`${firstName.value} ${lastName.value}`)
+watch(
+    ()=>fullName.value, 
+    (newV, oldV) => {
+    console.log("newV ==>", newV, "oldV ==>", oldV);
+});
 
-watch(
-    ()=>firstName.value, 
-    (newV, oldV) => {
-    console.log('with value');
-});
-watch(
-    fullName, 
-    (newV, oldV) => {
-    console.log('no value');
-});
 </script>

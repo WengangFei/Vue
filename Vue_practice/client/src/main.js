@@ -4,12 +4,13 @@ import App from './App.vue'
 import router from './router/routes.js';
 import { createPinia } from 'pinia';
 import useUserStorage from './store/userInstance';
+import ComponentParent from './components/ComponentParent.vue';
 // localStorage.clear();
 
 const app = createApp(App);
 
 app.use(createPinia());
-
+app.component('ComponentParent', ComponentParent);
 
 //authenticate the auth before direct to other routes
 router.beforeEach((to, from, next) => {
