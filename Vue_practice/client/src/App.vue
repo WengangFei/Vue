@@ -1,6 +1,13 @@
 <template>
   <div class="p-6">
-    <ComponentParent text="Parent"/>
+    <ButtonSlot class="bg-blue-400 rounded-md text-white px-1">
+    <template #scopedSlot="{changIcon}">{{ changIcon ? '🍏' : '🐙' }}</template>
+      Click Me
+    </ButtonSlot>
+    <hr class="border-red-500 m-4" />
+    <label>Hide the component: </label>
+    <input type="checkbox" v-model="checked"/>
+    <ComponentParent text="Parent" v-if="checked"/>
     <hr class="border-red-500 m-4" />
     <!-- <OptionAPI /> -->
     <!-- <TestVmodel /> -->
@@ -41,6 +48,7 @@ import FetchData from "./components/FetchData.vue";
 import CompositionApiPractice from "./components/CompositionApiPractice.vue";
 import ConnectDB from "./components/ConnectDB.vue";
 import ComponentParent from "./components/ComponentParent.vue";
+import ButtonSlot from "./components/ButtonSlot.vue";
 
 
 export default {
@@ -54,6 +62,7 @@ export default {
     CompositionApiPractice,
     ConnectDB,
     ComponentParent,
+    ButtonSlot
   },
 
   methods: {
@@ -66,6 +75,7 @@ export default {
   data(){
     return {
       isChanged: false,
+      checked: true,
     }
   }
 };

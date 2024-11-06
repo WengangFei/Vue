@@ -11,8 +11,10 @@
                 </button>
             </li>
         </ul>
+        <slot>Default name</slot><br />
+        <slot name="namedSlot"></slot><br />
+        <slot name='scopedSlot' :message="object" :person="person"></slot>
     </div>
-  
 </template>
 
 <script setup>
@@ -21,7 +23,6 @@ import { defineProps,ref } from 'vue';
 const props = defineProps({
         text: {
             type: String,
-            default: "Children",
             validator(value) {
                 return value.startsWith("");
             }
@@ -37,6 +38,18 @@ const emit = defineEmits({
         return typeof payload === 'string';
     }
 });
+
+const object = {
+    name: "John",
+    age: 30,
+    color: "yellow"
+}
+
+const person = {
+    name: "Jim",   
+    age: 40,
+    color: "blue"
+}
 
 
 </script>
