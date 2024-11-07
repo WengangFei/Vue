@@ -1,9 +1,13 @@
 <template>
   <div class="p-6">
     <ButtonSlot class="bg-blue-400 rounded-md text-white px-1">
-    <template #scopedSlot="{changIcon}">{{ changIcon ? '🍏' : '🐙' }}</template>
+    <template #scopedSlot="{changIcon}">
+      {{ changIcon ? '🍏' : '🐙' }}       
+    </template>
       Click Me
+
     </ButtonSlot>
+  
     <hr class="border-red-500 m-4" />
     <label>Hide the component: </label>
     <input type="checkbox" v-model="checked"/>
